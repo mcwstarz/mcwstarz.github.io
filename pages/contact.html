@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us | MCW Starz</title>
+  <meta name="description" content="Get in touch with MCW Starz. Inquire about programs, partnerships, or upcoming events for our elite AAU girls basketball program.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+<!-- TOP BANNER -->
+<div class="top-banner">
+  <a href="/pages/contact.html">Register to our upcoming events &rarr;</a>
+</div>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo"><img src="https://mcwstarz.com/wp-content/uploads/new-color-logo.webp" alt="MCW Starz" style="height:48px;"></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/">Home</a></li>
+      <li><a href="/pages/about.html">About Us</a></li>
+      <li><a href="/pages/recruiting.html">Recruiting</a></li>
+      <li><a href="/pages/training.html">Training Programs</a></li>
+      <li><a href="/pages/wellness.html">Health &amp; Wellness</a></li>
+      <li><a href="/pages/contact.html" class="active">Contact Us</a></li>
+      <li><a href="/pages/donate.html" class="nav-donate">Donate</a></li>
+    </ul>
+    <div class="nav-right">
+      <div class="nav-auth">
+        <a href="#">Login</a>
+        <div class="nav-signup-dropdown">
+          <button class="nav-signup-btn">Sign Up &#9662;</button>
+          <div class="signup-dropdown">
+            <a href="/pages/signup-athlete.html">Athlete / Parent</a>
+            <a href="/pages/signup-coach.html">Coach / Staff</a>
+            <a href="/pages/signup-volunteer.html">Volunteer</a>
+          </div>
+        </div>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<section class="page-hero" style="background-image: url('https://mcwstarz.com/wp-content/uploads/mcw-starz-img-home-players-3-e1762352471147-842x1024.webp'); background-size: cover; background-position: center;">
+  <div class="page-hero-content">
+    <h1>Get in <span class="accent">Touch</span></h1>
+    <p>Discover Our Programs &amp; Stay Updated on Events</p>
+  </div>
+</section>
+
+<!-- CONTACT GRID -->
+<section>
+  <div class="container">
+    <div class="contact-grid">
+
+      <!-- LEFT: Contact Info Card -->
+      <div class="contact-info-card">
+        <img src="https://mcwstarz.com/wp-content/uploads/team-mcw-1024x819.webp" alt="Team MCW" style="width:100%;height:180px;object-fit:cover;border-radius:8px;margin-bottom:1.5rem;">
+        <h3>Contact Information</h3>
+
+        <div class="contact-item">
+          <div class="contact-item-icon">&#128222;</div>
+          <div>
+            <strong>Phone</strong>
+            <p>978-578-8254</p>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="contact-item-icon">&#9993;</div>
+          <div>
+            <strong>Email</strong>
+            <p>inquiries@mcwstarz.org</p>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="contact-item-icon">&#128205;</div>
+          <div>
+            <strong>Address</strong>
+            <p>261 Cutler Rd<br>South Hamilton, MA 01982</p>
+          </div>
+        </div>
+
+        <img src="https://mcwstarz.com/wp-content/uploads/Image20251128112801-scaled.png" alt="Location Map" style="width:100%;height:140px;object-fit:cover;border-radius:8px;margin-top:1rem;">
+
+        <div class="contact-socials">
+          <a href="#" class="social-link" aria-label="Facebook">FB</a>
+          <a href="#" class="social-link" aria-label="Twitter">X</a>
+          <a href="#" class="social-link" aria-label="Instagram">IG</a>
+          <a href="#" class="social-link" aria-label="LinkedIn">IN</a>
+        </div>
+      </div>
+
+      <!-- RIGHT: Form Container -->
+      <div class="form-container">
+        <div class="form-tabs">
+          <button class="form-tab active" data-form="join">Join Program</button>
+          <button class="form-tab" data-form="partner">Partner</button>
+          <button class="form-tab" data-form="events">Events</button>
+        </div>
+
+        <!-- Form 1: Join Program -->
+        <div class="form-panel" id="form-join">
+          <form onsubmit="return false;">
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="join-first">First Name</label>
+                <input type="text" id="join-first" placeholder="First Name" required>
+              </div>
+              <div class="form-group">
+                <label for="join-last">Last Name</label>
+                <input type="text" id="join-last" placeholder="Last Name" required>
+              </div>
+              <div class="form-group">
+                <label for="join-email">Email</label>
+                <input type="email" id="join-email" placeholder="Email Address" required>
+              </div>
+              <div class="form-group">
+                <label for="join-phone">Phone</label>
+                <input type="tel" id="join-phone" placeholder="Phone Number">
+              </div>
+              <div class="form-group">
+                <label for="join-role">Role</label>
+                <select id="join-role">
+                  <option value="" disabled selected>Select Role</option>
+                  <option value="athlete">Athlete</option>
+                  <option value="coach">Coach</option>
+                  <option value="parent">Parent</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="join-division">Division</label>
+                <select id="join-division">
+                  <option value="" disabled selected>Select Division</option>
+                  <option value="middle-school">Middle School</option>
+                  <option value="high-school">High School</option>
+                </select>
+              </div>
+              <div class="form-group full">
+                <label for="join-message">Message</label>
+                <textarea id="join-message" placeholder="Tell us about your interest..."></textarea>
+              </div>
+              <div class="form-group full">
+                <label class="form-check">
+                  <input type="checkbox" required>
+                  I agree to the terms and conditions and privacy policy.
+                </label>
+              </div>
+            </div>
+            <button type="submit" class="form-submit">Send Inquiry</button>
+          </form>
+        </div>
+
+        <!-- Form 2: Partner -->
+        <div class="form-panel" id="form-partner" style="display: none;">
+          <form onsubmit="return false;">
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="partner-first">First Name</label>
+                <input type="text" id="partner-first" placeholder="First Name" required>
+              </div>
+              <div class="form-group">
+                <label for="partner-last">Last Name</label>
+                <input type="text" id="partner-last" placeholder="Last Name" required>
+              </div>
+              <div class="form-group">
+                <label for="partner-email">Email</label>
+                <input type="email" id="partner-email" placeholder="Email Address" required>
+              </div>
+              <div class="form-group">
+                <label for="partner-phone">Phone</label>
+                <input type="tel" id="partner-phone" placeholder="Phone Number">
+              </div>
+              <div class="form-group">
+                <label for="partner-company">Company Name</label>
+                <input type="text" id="partner-company" placeholder="Company Name">
+              </div>
+              <div class="form-group">
+                <label for="partner-type">Partnership Type</label>
+                <select id="partner-type">
+                  <option value="" disabled selected>Select Type</option>
+                  <option value="sponsorship">Sponsorship</option>
+                  <option value="event-partnership">Event Partnership</option>
+                  <option value="program-support">Program Support</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div class="form-group full">
+                <label for="partner-message">Message</label>
+                <textarea id="partner-message" placeholder="Tell us about your partnership interest..."></textarea>
+              </div>
+              <div class="form-group full">
+                <label class="form-check">
+                  <input type="checkbox" required>
+                  I agree to the terms and conditions and privacy policy.
+                </label>
+              </div>
+            </div>
+            <button type="submit" class="form-submit">Submit Partnership Inquiry</button>
+          </form>
+        </div>
+
+        <!-- Form 3: Events -->
+        <div class="form-panel" id="form-events" style="display: none;">
+          <form onsubmit="return false;">
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="events-first">First Name</label>
+                <input type="text" id="events-first" placeholder="First Name" required>
+              </div>
+              <div class="form-group">
+                <label for="events-last">Last Name</label>
+                <input type="text" id="events-last" placeholder="Last Name" required>
+              </div>
+              <div class="form-group">
+                <label for="events-email">Email</label>
+                <input type="email" id="events-email" placeholder="Email Address" required>
+              </div>
+              <div class="form-group">
+                <label for="events-phone">Phone</label>
+                <input type="tel" id="events-phone" placeholder="Phone Number">
+              </div>
+              <div class="form-group full">
+                <label for="events-type">Event Type</label>
+                <select id="events-type">
+                  <option value="" disabled selected>Select Event Type</option>
+                  <option value="tournament">Tournament</option>
+                  <option value="camp-clinic">Camp / Clinic</option>
+                  <option value="fundraiser">Fundraiser</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div class="form-group full">
+                <label for="events-details">Details</label>
+                <textarea id="events-details" placeholder="Tell us about the event..."></textarea>
+              </div>
+              <div class="form-group full">
+                <label class="form-check">
+                  <input type="checkbox" required>
+                  I agree to the terms and conditions and privacy policy.
+                </label>
+              </div>
+            </div>
+            <button type="submit" class="form-submit">Submit Event Inquiry</button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PLAYER IMAGE -->
+<section style="text-align:center;padding:2rem 0;">
+  <img src="https://mcwstarz.com/wp-content/uploads/image-39-1-1-551x1024.webp" alt="MCW Starz Player" style="max-width:300px;width:100%;height:auto;border-radius:8px;">
+</section>
+
+<!-- NEWSLETTER -->
+<section class="newsletter">
+  <div class="container text-center">
+    <h2>Stay in the Game</h2>
+    <p>Subscribe to our newsletter for updates on events, recruiting tips, and player spotlights.</p>
+    <form class="newsletter-form" onsubmit="return false;">
+      <input type="email" placeholder="Enter your email" aria-label="Email address">
+      <button type="submit">Subscribe</button>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="/" class="nav-logo"><img src="https://mcwstarz.com/wp-content/uploads/new-color-logo.webp" alt="MCW Starz" style="height:48px;"></a>
+      <p>An elite AAU girls basketball program dedicated to developing young athletes on and off the court.</p>
+    </div>
+    <div>
+      <h4>Program</h4>
+      <ul>
+        <li><a href="/pages/about.html">About Us</a></li>
+        <li><a href="/pages/recruiting.html">Recruiting</a></li>
+        <li><a href="/pages/training.html">Training</a></li>
+        <li><a href="/pages/wellness.html">Health &amp; Wellness</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Get Involved</h4>
+      <ul>
+        <li><a href="/pages/contact.html">Contact</a></li>
+        <li><a href="/pages/donate.html">Donate</a></li>
+        <li><a href="/pages/signup-athlete.html">Sign Up</a></li>
+        <li><a href="#">Login</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Resources</h4>
+      <ul>
+        <li><a href="#">FAQ's</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms of Service</a></li>
+        <li><a href="#">Disclaimer</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 MCW Starz. All rights reserved.</span>
+    <div class="footer-legal">
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+      <a href="#">EULA</a>
+    </div>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+
+</body>
+</html>
