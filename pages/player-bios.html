@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/styles.css?v=2">
+  <link rel="stylesheet" href="../css/styles.css?v=3">
 </head>
 <body>
 <a href="#main-content" class="skip-nav">Skip to main content</a>
@@ -109,16 +109,23 @@
 <!-- RECRUIT MODAL -->
 <div class="recruit-modal-overlay" id="recruitModalOverlay" onclick="closeRecruitModal(event)">
   <div class="recruit-modal" role="dialog" aria-modal="true" aria-labelledby="recruitModalTitle">
-    <button class="recruit-modal-close" onclick="closeRecruitModal()" aria-label="Close">&times;</button>
-    <div class="recruit-modal-header">
-      <div class="recruit-modal-icon">&#9733;</div>
-      <h2 class="recruit-modal-title" id="recruitModalTitle">Recruit <span id="recruitPlayerName"></span></h2>
-      <p class="recruit-modal-sub">Fill out the form below and a member of the MCW Starz program will follow up with you.</p>
+
+    <!-- Header -->
+    <div class="rmodal-header">
+      <div class="rmodal-header-text">
+        <p class="rmodal-eyebrow">Recruiting Inquiry</p>
+        <h2 class="rmodal-title" id="recruitModalTitle"><span id="recruitPlayerName"></span></h2>
+        <p class="rmodal-sub">A member of the MCW Starz team will follow up with you directly.</p>
+      </div>
+      <button class="rmodal-close" onclick="closeRecruitModal()" aria-label="Close">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
     </div>
+
     <form class="recruit-form" id="recruitForm" onsubmit="submitRecruitForm(event)">
       <input type="hidden" id="recruitPlayerField" name="player">
 
-      <div class="recruit-form-section-label">Your Information</div>
+      <div class="rmodal-section">Your Information</div>
       <div class="recruit-form-row">
         <div class="recruit-form-group">
           <label for="recruitFirstName">First Name <span>*</span></label>
@@ -142,7 +149,7 @@
       <div class="recruit-form-row">
         <div class="recruit-form-group">
           <label for="recruitCollege">College / University <span>*</span></label>
-          <input type="text" id="recruitCollege" name="college" placeholder="University of..." required>
+          <input type="text" id="recruitCollege" name="college" placeholder="University of…" required>
         </div>
         <div class="recruit-form-group">
           <label for="recruitRole">Your Role <span>*</span></label>
@@ -158,7 +165,7 @@
         </div>
       </div>
 
-      <div class="recruit-form-section-label">Who Would You Like to Speak With?</div>
+      <div class="rmodal-section">Who Would You Like to Speak With?</div>
       <div class="recruit-form-checkboxes">
         <label class="recruit-checkbox"><input type="checkbox" name="speakWith" value="Program Coach"> <span>Program Coach</span></label>
         <label class="recruit-checkbox"><input type="checkbox" name="speakWith" value="The Player"> <span>The Player</span></label>
@@ -167,17 +174,19 @@
 
       <div class="recruit-form-group">
         <label for="recruitMessage">Additional Notes</label>
-        <textarea id="recruitMessage" name="message" rows="3" placeholder="Scholarship availability, campus visit interest, timeline…"></textarea>
+        <textarea id="recruitMessage" name="message" rows="2" placeholder="Scholarship availability, campus visit interest, timeline…"></textarea>
       </div>
 
-      <button type="submit" class="recruit-submit-btn">Send Recruiting Inquiry</button>
+      <button type="submit" class="recruit-submit-btn">Send Inquiry</button>
     </form>
+
     <div class="recruit-success" id="recruitSuccess" style="display:none;">
       <div class="recruit-success-icon">&#10003;</div>
       <h3>Inquiry Sent!</h3>
       <p>We've received your inquiry and will be in touch shortly.</p>
       <button class="recruit-submit-btn" onclick="closeRecruitModal()">Close</button>
     </div>
+
   </div>
 </div>
 
@@ -514,7 +523,7 @@ function renderProfile(p) {
   var html = '<div class="player-profile-header">'
     + '<div class="player-profile-photo-col">'
     + '<div class="player-profile-photo">' + photoHtml + '</div>'
-    + '<button class="recruit-btn" onclick="openRecruitModal(' + JSON.stringify(p.name) + '"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>Recruit This Player</button>'
+    + '<button class="recruit-btn" data-name="' + p.name.replace(/"/g, '&quot;') + '" onclick="openRecruitModal(this.dataset.name)"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>Recruit This Player</button>'
     + '</div>'
     + '<div class="player-profile-info">'
     + '<div class="player-profile-name">' + nameDisplay + '</div>'

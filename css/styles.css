@@ -935,7 +935,7 @@ section { padding: 5rem 2rem; }
 }
 .player-profile-info { display: flex; flex-direction: column; justify-content: center; }
 .player-profile-name {
-  font-family: var(--font-display); font-size: 2.2rem; font-weight: 900;
+  font-family: var(--font-display); font-size: 2.2rem; font-weight: 700;
   color: var(--primary); text-transform: uppercase;
   letter-spacing: -0.5px; line-height: 1; margin-bottom: 0.35rem;
 }
@@ -1184,23 +1184,38 @@ section { padding: 5rem 2rem; }
   transform: translateY(16px); transition: transform 0.2s;
 }
 .recruit-modal-overlay.open .recruit-modal { transform: translateY(0); }
-.recruit-modal-close {
-  position: absolute; top: 0.75rem; right: 0.75rem;
-  background: none; border: none; font-size: 1.25rem; line-height: 1;
-  color: var(--text-gray); cursor: pointer;
-  width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;
-  border-radius: 8px; transition: background 0.15s;
+/* Modal header — new left-aligned design */
+.rmodal-header {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  gap: 1rem; padding-bottom: 1.25rem; margin-bottom: 1.25rem;
+  border-bottom: 1px solid var(--gray-100);
 }
-.recruit-modal-close:hover { background: var(--gray-50); color: var(--text-dark); }
-.recruit-modal-header { text-align: center; margin-bottom: 1.75rem; }
-.recruit-modal-icon {
-  width: 52px; height: 52px; border-radius: 50%;
-  background: var(--red); color: var(--white);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1.4rem; margin: 0 auto 0.75rem;
+.rmodal-header-text { flex: 1; }
+.rmodal-eyebrow {
+  font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.12em; color: var(--red); margin-bottom: 0.25rem;
 }
-.recruit-modal-title { font-size: 1.4rem; font-weight: 900; color: var(--text-dark); margin: 0 0 0.4rem; }
-.recruit-modal-sub { color: var(--text-gray); font-size: 0.9rem; margin: 0; }
+.rmodal-title {
+  font-size: 1.3rem; font-weight: 700; color: var(--text-dark);
+  margin: 0 0 0.3rem; line-height: 1.2;
+}
+.rmodal-sub { color: var(--text-gray); font-size: 0.82rem; margin: 0; line-height: 1.5; }
+.rmodal-close {
+  background: none; border: none; cursor: pointer; color: var(--text-gray);
+  width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
+  border-radius: 8px; transition: background 0.15s, color 0.15s; flex-shrink: 0;
+  margin-top: -2px;
+}
+.rmodal-close:hover { background: var(--gray-50); color: var(--text-dark); }
+.rmodal-section {
+  font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.1em; color: var(--text-gray);
+  margin: 1.1rem 0 0.65rem;
+}
+.rmodal-section:first-of-type { margin-top: 0; }
+
+/* Keep old close class working too */
+.recruit-modal-close { display: none; }
 
 /* form layout */
 .recruit-form-section-label {
