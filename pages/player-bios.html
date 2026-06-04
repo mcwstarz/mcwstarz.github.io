@@ -8,14 +8,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="../css/styles.css?v=2">
 </head>
 <body>
+<a href="#main-content" class="skip-nav">Skip to main content</a>
 
-<!-- TOP BANNER -->
-<div class="top-banner">
-  <a href="/pages/contact.html">Register to our upcoming events &rarr;</a>
-</div>
 
 <!-- NAV -->
 <nav class="nav">
@@ -52,14 +49,14 @@
 </nav>
 
 <!-- PLAYER BIOS LAYOUT -->
-<section class="player-bios-section">
+<section class="player-bios-section" id="main-content" aria-label="Player Bios"><h1 class="sr-only">MCW Starz Player Bios</h1>
   <div class="player-layout">
 
     <!-- LEFT SIDEBAR: PLAYER LIST -->
-    <div class="player-sidebar" id="playerSidebar"></div>
+    <div class="player-sidebar" id="playerSidebar" role="navigation" aria-label="Player list"></div>
 
     <!-- RIGHT: PLAYER PROFILE -->
-    <div class="player-profile-area" id="playerProfile"></div>
+    <div class="player-profile-area" id="playerProfile" aria-live="polite" aria-label="Player profile"></div>
 
   </div>
 </section>
@@ -108,6 +105,81 @@
     </div>
   </div>
 </footer>
+
+<!-- RECRUIT MODAL -->
+<div class="recruit-modal-overlay" id="recruitModalOverlay" onclick="closeRecruitModal(event)">
+  <div class="recruit-modal" role="dialog" aria-modal="true" aria-labelledby="recruitModalTitle">
+    <button class="recruit-modal-close" onclick="closeRecruitModal()" aria-label="Close">&times;</button>
+    <div class="recruit-modal-header">
+      <div class="recruit-modal-icon">&#9733;</div>
+      <h2 class="recruit-modal-title" id="recruitModalTitle">Recruit <span id="recruitPlayerName"></span></h2>
+      <p class="recruit-modal-sub">Fill out the form below and a member of the MCW Starz program will follow up with you.</p>
+    </div>
+    <form class="recruit-form" id="recruitForm" onsubmit="submitRecruitForm(event)">
+      <input type="hidden" id="recruitPlayerField" name="player">
+
+      <div class="recruit-form-section-label">Your Information</div>
+      <div class="recruit-form-row">
+        <div class="recruit-form-group">
+          <label for="recruitFirstName">First Name <span>*</span></label>
+          <input type="text" id="recruitFirstName" name="firstName" placeholder="Jane" required>
+        </div>
+        <div class="recruit-form-group">
+          <label for="recruitLastName">Last Name <span>*</span></label>
+          <input type="text" id="recruitLastName" name="lastName" placeholder="Smith" required>
+        </div>
+      </div>
+      <div class="recruit-form-row">
+        <div class="recruit-form-group">
+          <label for="recruitEmail">Email <span>*</span></label>
+          <input type="email" id="recruitEmail" name="email" placeholder="coach@university.edu" required>
+        </div>
+        <div class="recruit-form-group">
+          <label for="recruitPhone">Phone</label>
+          <input type="tel" id="recruitPhone" name="phone" placeholder="(555) 000-0000">
+        </div>
+      </div>
+      <div class="recruit-form-row">
+        <div class="recruit-form-group">
+          <label for="recruitCollege">College / University <span>*</span></label>
+          <input type="text" id="recruitCollege" name="college" placeholder="University of..." required>
+        </div>
+        <div class="recruit-form-group">
+          <label for="recruitRole">Your Role <span>*</span></label>
+          <select id="recruitRole" name="role" required>
+            <option value="" disabled selected>Select role…</option>
+            <option>Head Coach</option>
+            <option>Assistant Coach</option>
+            <option>Associate Head Coach</option>
+            <option>Athletic Director</option>
+            <option>Recruiting Coordinator</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="recruit-form-section-label">Who Would You Like to Speak With?</div>
+      <div class="recruit-form-checkboxes">
+        <label class="recruit-checkbox"><input type="checkbox" name="speakWith" value="Program Coach"> <span>Program Coach</span></label>
+        <label class="recruit-checkbox"><input type="checkbox" name="speakWith" value="The Player"> <span>The Player</span></label>
+        <label class="recruit-checkbox"><input type="checkbox" name="speakWith" value="Player's Family"> <span>Player's Family</span></label>
+      </div>
+
+      <div class="recruit-form-group">
+        <label for="recruitMessage">Additional Notes</label>
+        <textarea id="recruitMessage" name="message" rows="3" placeholder="Scholarship availability, campus visit interest, timeline…"></textarea>
+      </div>
+
+      <button type="submit" class="recruit-submit-btn">Send Recruiting Inquiry</button>
+    </form>
+    <div class="recruit-success" id="recruitSuccess" style="display:none;">
+      <div class="recruit-success-icon">&#10003;</div>
+      <h3>Inquiry Sent!</h3>
+      <p>We've received your inquiry and will be in touch shortly.</p>
+      <button class="recruit-submit-btn" onclick="closeRecruitModal()">Close</button>
+    </div>
+  </div>
+</div>
 
 <script src="../js/main.js"></script>
 <script>
@@ -345,6 +417,10 @@ function getInitials(name) {
   return name.split(' ').map(function(n){ return n[0]; }).join('');
 }
 
+function slugify(name) {
+  return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+}
+
 function renderSidebar(players) {
   var sidebar = document.getElementById('playerSidebar');
   var html = '';
@@ -354,7 +430,7 @@ function renderSidebar(players) {
     html += '<div class="player-sidebar-grade-label">Featured</div>';
     featured.forEach(function(p) {
       var idx = players.indexOf(p);
-      html += '<button type="button" class="player-sidebar-btn" data-idx="' + idx + '">' + p.name + (p.number ? ' <span class="sidebar-number">' + p.number + '</span>' : '') + '</button>';
+      html += '<a href="#' + slugify(p.name) + '" class="player-sidebar-btn" data-idx="' + idx + '">' + p.name + (p.number ? ' <span class="sidebar-number">' + p.number + '</span>' : '') + '</a>';
     });
   }
 
@@ -364,20 +440,40 @@ function renderSidebar(players) {
     html += '<div class="player-sidebar-grade-label">' + ordinal(g) + ' Grade</div>';
     graded.forEach(function(p) {
       var idx = players.indexOf(p);
-      html += '<button type="button" class="player-sidebar-btn" data-idx="' + idx + '">' + p.name + '</button>';
+      html += '<a href="#' + slugify(p.name) + '" class="player-sidebar-btn" data-idx="' + idx + '">' + p.name + '</a>';
     });
   });
 
   sidebar.innerHTML = html;
+
+  function activateByHash(hash) {
+    var slug = (hash || '').replace('#', '');
+    var target = null;
+    if (slug) {
+      sidebar.querySelectorAll('.player-sidebar-btn').forEach(function(btn) {
+        if (slugify(players[parseInt(btn.dataset.idx)].name) === slug) target = btn;
+      });
+    }
+    if (!target) target = sidebar.querySelector('.player-sidebar-btn');
+    if (!target) return;
+    sidebar.querySelectorAll('.player-sidebar-btn').forEach(function(b){ b.classList.remove('active'); });
+    target.classList.add('active');
+    renderProfile(players[parseInt(target.dataset.idx)]);
+  }
+
   sidebar.querySelectorAll('.player-sidebar-btn').forEach(function(btn) {
-    btn.addEventListener('click', function() {
+    btn.addEventListener('click', function(e) {
       sidebar.querySelectorAll('.player-sidebar-btn').forEach(function(b){ b.classList.remove('active'); });
       btn.classList.add('active');
       renderProfile(players[parseInt(btn.dataset.idx)]);
     });
   });
-  var first = sidebar.querySelector('.player-sidebar-btn');
-  if (first) { first.classList.add('active'); renderProfile(players[0]); }
+
+  window.addEventListener('hashchange', function() {
+    activateByHash(window.location.hash);
+  });
+
+  activateByHash(window.location.hash);
 }
 
 function renderProfile(p) {
@@ -416,7 +512,10 @@ function renderProfile(p) {
   var nameDisplay = p.name + (p.number ? ' <span style="color:var(--red);font-size:0.7em;font-weight:700;">' + p.number + '</span>' : '');
 
   var html = '<div class="player-profile-header">'
+    + '<div class="player-profile-photo-col">'
     + '<div class="player-profile-photo">' + photoHtml + '</div>'
+    + '<button class="recruit-btn" onclick="openRecruitModal(' + JSON.stringify(p.name) + '"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>Recruit This Player</button>'
+    + '</div>'
     + '<div class="player-profile-info">'
     + '<div class="player-profile-name">' + nameDisplay + '</div>'
     + '<div class="player-profile-pos">' + p.position + '</div>'
@@ -445,6 +544,38 @@ function statItem(val, label) {
 
 function ordinal(g) {
   return g + (g === 1 ? 'st' : g === 2 ? 'nd' : g === 3 ? 'rd' : 'th');
+}
+
+// ── RECRUIT MODAL ────────────────────────────────────────────────────────────
+function openRecruitModal(playerName) {
+  document.getElementById('recruitPlayerName').textContent = playerName;
+  document.getElementById('recruitPlayerField').value = playerName;
+  document.getElementById('recruitForm').style.display = '';
+  document.getElementById('recruitSuccess').style.display = 'none';
+  document.getElementById('recruitForm').reset();
+  document.getElementById('recruitPlayerField').value = playerName;
+  document.getElementById('recruitModalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeRecruitModal(e) {
+  if (e && e.target !== document.getElementById('recruitModalOverlay') && !e.target.classList.contains('recruit-modal-close')) return;
+  document.getElementById('recruitModalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function submitRecruitForm(e) {
+  e.preventDefault();
+  // Collect form data — wire up to your backend or email service here
+  var data = new FormData(e.target);
+  var obj = {};
+  data.forEach(function(v, k) {
+    if (obj[k]) { obj[k] = [].concat(obj[k], v); } else { obj[k] = v; }
+  });
+  console.log('Recruit inquiry:', obj);
+  // Show success state
+  document.getElementById('recruitForm').style.display = 'none';
+  document.getElementById('recruitSuccess').style.display = '';
 }
 
 // ── BOOT ─────────────────────────────────────────────────────────────────────

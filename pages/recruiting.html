@@ -8,14 +8,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="../css/styles.css?v=2">
 </head>
 <body>
+<a href="#main-content" class="skip-nav">Skip to main content</a>
 
-<!-- TOP BANNER -->
-<div class="top-banner">
-  <a href="/pages/contact.html">Register to our upcoming events</a>
-</div>
 
 <!-- NAV -->
 <nav class="nav">
@@ -51,21 +48,55 @@
   </div>
 </nav>
 
-<!-- PAGE HERO -->
-<section class="page-hero">
-  <div class="page-hero-content">
-    <div class="hero-badge">Next-Level Recruiting</div>
-    <h1>College Recruiting <span class="accent">Strategy</span></h1>
-    <p style="font-size: 1.15rem; color: rgba(255,255,255,0.8); margin-bottom: 0.75rem; font-weight: 600;">Using Basketball as the Vehicle. Finding the Right Fit for Life.</p>
-    <p>College recruiting is competitive, nuanced, and relationship-driven. Most families feel overwhelmed at the beginning. We provide strategic clarity, honest evaluation, and positioning guidance so athletes move intentionally, not reactively.</p>
-    <div class="btn-group center" style="margin-top: 2rem;">
-      <a href="#form" class="btn btn-primary">Schedule Recruiting Consult &rarr;</a>
+<!-- PAGE HERO: SPLIT -->
+<h1 class="sr-only">MCW Starz College Recruiting</h1>
+<div class="rsh">
+
+  <!-- LEFT: Families & Athletes -->
+  <a href="#form" class="rsh-panel rsh-families">
+    <div class="rsh-bg"></div>
+    <div class="rsh-noise"></div>
+    <div class="rsh-inner">
+      <div class="rsh-tag">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+        Athletes &amp; Families
+      </div>
+      <h2 class="rsh-headline">Get Your Athlete<br><em>Recruited.</em></h2>
+      <p class="rsh-sub">Strategic clarity. Honest evaluation. A roadmap built around your athlete — not a template.</p>
+      <div class="rsh-cta">
+        Schedule a Free Consult
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </div>
     </div>
-  </div>
-</section>
+    <div class="rsh-number">01</div>
+  </a>
+
+  <!-- CENTER OR badge -->
+  <div class="rsh-or"><span>OR</span></div>
+
+  <!-- RIGHT: College Coaches -->
+  <button class="rsh-panel rsh-coaches" onclick="openCoachRecruitModal()">
+    <div class="rsh-bg"></div>
+    <div class="rsh-noise"></div>
+    <div class="rsh-inner">
+      <div class="rsh-tag">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        College Coaches
+      </div>
+      <h2 class="rsh-headline">Recruit Our<br><em>Players.</em></h2>
+      <p class="rsh-sub">Browse our elite roster, submit a direct inquiry, and we'll connect you with the right people — fast.</p>
+      <div class="rsh-cta">
+        Recruit a Player
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </div>
+    </div>
+    <div class="rsh-number">02</div>
+  </button>
+
+</div>
 
 <!-- ACHIEVEMENT STAT -->
-<section class="dark-section">
+<section id="main-content" class="dark-section">
   <div class="container text-center">
     <h2 class="section-title section-title-light">Over <span class="accent">200+</span> Girls Placed in Private Schools &amp; College Programs</h2>
     <p class="section-subtitle section-subtitle-light" style="margin: 0 auto;">Our athletes have gone on to play at top programs across New England and the U.S.</p>
@@ -73,26 +104,23 @@
 </section>
 
 <!-- HOW WE GET STARTED -->
-<section class="gray-section">
+<section class="started-section">
   <div class="container">
-    <div class="section-label">The Starting Point</div>
-    <div class="section-title">How Do We Get Started?</div>
-    <p class="section-subtitle" style="margin-bottom: 2rem;">This is where most families feel lost.</p>
-    <div class="grid-2" style="align-items: start;">
-      <div>
-        <div class="step-card fade-in" style="margin-bottom: 1rem;">
-          <ul class="check-list" style="margin-top: 0;">
-            <li>Are we behind?</li>
-            <li>What level is realistic?</li>
-            <li>Should we already be contacting coaches?</li>
-            <li>Is Early Decision something we should consider?</li>
-            <li>How do we know where we stand?</li>
-          </ul>
-        </div>
-      </div>
-      <div class="step-card fade-in" style="display: flex; align-items: center; min-height: 100%;">
-        <p style="font-size: 1.05rem; color: var(--blue); font-weight: 600; line-height: 1.7;">We begin by answering those questions with clarity and honesty.</p>
-      </div>
+    <div class="started-header">
+      <div class="section-label" style="color:rgba(255,255,255,0.5);">The Starting Point</div>
+      <h2 class="section-title section-title-light">How Do We Get Started?</h2>
+      <p class="section-subtitle" style="color:rgba(255,255,255,0.5); margin:0 auto;">This is where most families feel lost.</p>
+    </div>
+    <div class="started-questions">
+      <div class="started-q fade-in">Are we behind?</div>
+      <div class="started-q fade-in">What level is realistic?</div>
+      <div class="started-q fade-in">Should we already be contacting coaches?</div>
+      <div class="started-q fade-in">Is Early Decision something we should consider?</div>
+      <div class="started-q fade-in">How do we know where we stand?</div>
+    </div>
+    <div class="started-answer fade-in">
+      <div class="started-answer-line"></div>
+      <p>We begin by answering those questions with <em>clarity</em> and <em>honesty.</em></p>
     </div>
   </div>
 </section>
@@ -189,15 +217,31 @@
       <div class="section-title">Service Offerings</div>
       <p class="section-subtitle">Targeted recruiting support built around your athlete's unique path.</p>
     </div>
-    <div class="grid-2 mt-4">
-      <div class="card card-red-top fade-in">
-        <h3>Leaderboard Positioning &amp; Strategy</h3>
-        <p>Understanding where your athlete ranks, the difference between priority and depth, and when to push versus pivot.</p>
-        <p style="margin-top: 0.75rem; font-style: italic; font-size: 0.83rem; color: var(--red);">Recruiting is about positioning, not just performance.</p>
+    <div class="service-list mt-4">
+
+      <div class="service-row fade-in">
+        <div class="service-num">01</div>
+        <div class="service-body">
+          <h3 class="service-title">Leaderboard Positioning &amp; Strategy</h3>
+          <p class="service-desc">Understanding where your athlete ranks, the difference between priority and depth, and when to push versus pivot.</p>
+          <p class="service-tagline">Recruiting is about positioning, not just performance.</p>
+        </div>
+        <ul class="service-points">
+          <li>Leaderboard & ranking analysis</li>
+          <li>Priority vs. depth positioning</li>
+          <li>When to push vs. pivot</li>
+          <li>Exposure event strategy</li>
+        </ul>
       </div>
-      <div class="card card-red-top fade-in">
-        <h3>Coach Communication &amp; Advocacy</h3>
-        <ul class="check-list" style="margin-top: 0;">
+
+      <div class="service-row fade-in">
+        <div class="service-num">02</div>
+        <div class="service-body">
+          <h3 class="service-title">Coach Communication &amp; Advocacy</h3>
+          <p class="service-desc">We guide every touchpoint with college coaches — from first contact to offer navigation.</p>
+          <p class="service-tagline">Relationships win recruiting battles.</p>
+        </div>
+        <ul class="service-points">
           <li>Outreach templates</li>
           <li>Follow-up strategy</li>
           <li>Visit preparation</li>
@@ -205,23 +249,39 @@
           <li>Offer navigation</li>
         </ul>
       </div>
-      <div class="card card-red-top fade-in">
-        <h3>Early Decision &amp; DIII Strategy</h3>
-        <p>Specialized guidance for the DIII recruiting process, which operates on a different timeline and set of priorities.</p>
-        <p style="margin-top: 0.75rem; font-style: italic; font-size: 0.83rem; color: var(--red);">Recruiting is relationship-driven.</p>
+
+      <div class="service-row fade-in">
+        <div class="service-num">03</div>
+        <div class="service-body">
+          <h3 class="service-title">Early Decision &amp; DIII Strategy</h3>
+          <p class="service-desc">Specialized guidance for the DIII recruiting process, which operates on a different timeline and set of priorities than DI or DII.</p>
+          <p class="service-tagline">Recruiting is relationship-driven.</p>
+        </div>
+        <ul class="service-points">
+          <li>DIII timeline planning</li>
+          <li>Early Decision strategy</li>
+          <li>Academic alignment</li>
+          <li>Campus visit coaching</li>
+        </ul>
       </div>
-      <div class="card card-red-top fade-in">
-        <h3>Holistic Fit Evaluation</h3>
-        <ul class="check-list" style="margin-top: 0;">
+
+      <div class="service-row fade-in">
+        <div class="service-num">04</div>
+        <div class="service-body">
+          <h3 class="service-title">Holistic Fit Evaluation</h3>
+          <p class="service-desc">The right school is more than a logo. We evaluate the full picture so your athlete thrives for four years — not just on signing day.</p>
+          <p class="service-tagline">The goal is not just a commitment post.</p>
+        </div>
+        <ul class="service-points">
           <li>Academic rigor</li>
           <li>Campus culture</li>
           <li>Geographic comfort</li>
           <li>Financial considerations</li>
           <li>Values alignment</li>
-          <li>Lifestyle</li>
+          <li>Lifestyle fit</li>
         </ul>
-        <p style="margin-top: 0.75rem; font-style: italic; font-size: 0.83rem; color: var(--red);">The goal is not just a commitment post. It is the right four-year experience.</p>
       </div>
+
     </div>
   </div>
 </section>
@@ -493,6 +553,180 @@
   </div>
 </footer>
 
+<!-- COACH RECRUIT MODAL -->
+<div class="recruit-modal-overlay" id="coachRecruitOverlay" onclick="closeCoachModal(event)">
+  <div class="recruit-modal" role="dialog" aria-modal="true" aria-labelledby="coachModalTitle">
+    <button class="recruit-modal-close" onclick="closeCoachModal()" aria-label="Close">&times;</button>
+    <div class="recruit-modal-header">
+      <div class="recruit-modal-icon">&#9733;</div>
+      <h2 class="recruit-modal-title" id="coachModalTitle">Recruit a Player</h2>
+      <p class="recruit-modal-sub">Select a player you're interested in, then fill out your information below.</p>
+    </div>
+    <form class="recruit-form" id="coachRecruitForm" onsubmit="submitCoachForm(event)">
+
+      <!-- Player selector -->
+      <div class="recruit-form-section-label">Select a Player</div>
+      <div class="recruit-form-group">
+        <label for="coachPlayerSelect">Player <span>*</span></label>
+        <select id="coachPlayerSelect" name="player" required>
+          <option value="" disabled selected>Loading players…</option>
+        </select>
+      </div>
+
+      <div class="recruit-form-section-label">Your Information</div>
+      <div class="recruit-form-row">
+        <div class="recruit-form-group">
+          <label for="coachFirstName">First Name <span>*</span></label>
+          <input type="text" id="coachFirstName" name="firstName" placeholder="Jane" required>
+        </div>
+        <div class="recruit-form-group">
+          <label for="coachLastName">Last Name <span>*</span></label>
+          <input type="text" id="coachLastName" name="lastName" placeholder="Smith" required>
+        </div>
+      </div>
+      <div class="recruit-form-row">
+        <div class="recruit-form-group">
+          <label for="coachEmail">Email <span>*</span></label>
+          <input type="email" id="coachEmail" name="email" placeholder="coach@university.edu" required>
+        </div>
+        <div class="recruit-form-group">
+          <label for="coachPhone">Phone</label>
+          <input type="tel" id="coachPhone" name="phone" placeholder="(555) 000-0000">
+        </div>
+      </div>
+      <div class="recruit-form-row">
+        <div class="recruit-form-group">
+          <label for="coachCollege">College / University <span>*</span></label>
+          <input type="text" id="coachCollege" name="college" placeholder="University of…" required>
+        </div>
+        <div class="recruit-form-group">
+          <label for="coachRole">Your Role <span>*</span></label>
+          <select id="coachRole" name="role" required>
+            <option value="" disabled selected>Select role…</option>
+            <option>Head Coach</option>
+            <option>Assistant Coach</option>
+            <option>Associate Head Coach</option>
+            <option>Athletic Director</option>
+            <option>Recruiting Coordinator</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="recruit-form-section-label">Who Would You Like to Speak With?</div>
+      <div class="recruit-form-checkboxes">
+        <label class="recruit-checkbox"><input type="checkbox" name="speakWith" value="Program Coach"> <span>Program Coach</span></label>
+        <label class="recruit-checkbox"><input type="checkbox" name="speakWith" value="The Player"> <span>The Player</span></label>
+        <label class="recruit-checkbox"><input type="checkbox" name="speakWith" value="Player's Family"> <span>Player's Family</span></label>
+      </div>
+
+      <div class="recruit-form-group">
+        <label for="coachMessage">Additional Notes</label>
+        <textarea id="coachMessage" name="message" rows="3" placeholder="Scholarship availability, campus visit interest, timeline…"></textarea>
+      </div>
+
+      <button type="submit" class="recruit-submit-btn">Send Recruiting Inquiry</button>
+    </form>
+    <div class="recruit-success" id="coachSuccess" style="display:none;">
+      <div class="recruit-success-icon">&#10003;</div>
+      <h3>Inquiry Sent!</h3>
+      <p>We've received your inquiry and will be in touch shortly.</p>
+      <button class="recruit-submit-btn" onclick="closeCoachModal()">Close</button>
+    </div>
+  </div>
+</div>
+
 <script src="../js/main.js"></script>
+<script>
+var SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRK8fRKjqQa6jJ89tbzDVic2GRThclIzI5EjQWIxakdsemgy0Ls-STGBOE60fBwMac2JtEeorCfUXO5/pub?gid=0&single=true&output=csv';
+
+function parseCSVRow(row) {
+  var result = [], inQuotes = false, current = '';
+  for (var i = 0; i < row.length; i++) {
+    var ch = row[i];
+    if (ch === '"') { if (inQuotes && row[i+1] === '"') { current += '"'; i++; } else inQuotes = !inQuotes; }
+    else if (ch === ',' && !inQuotes) { result.push(current); current = ''; }
+    else { current += ch; }
+  }
+  result.push(current);
+  return result;
+}
+
+function parseCSVNames(text) {
+  var rows = [], inQuotes = false, current = '';
+  for (var i = 0; i < text.length; i++) {
+    var ch = text[i];
+    if (ch === '"') { inQuotes = !inQuotes; current += ch; }
+    else if ((ch === '\n' || ch === '\r') && !inQuotes) {
+      if (ch === '\r' && text[i+1] === '\n') i++;
+      rows.push(current); current = '';
+    } else { current += ch; }
+  }
+  if (current) rows.push(current);
+  if (rows.length < 2) return [];
+  var headers = parseCSVRow(rows[0]).map(function(h){ return h.trim(); });
+  var nameIdx = headers.indexOf('name');
+  var featuredIdx = headers.indexOf('featured');
+  if (nameIdx === -1) return [];
+  return rows.slice(1).filter(function(r){ return r.trim(); }).map(function(row) {
+    var vals = parseCSVRow(row);
+    return { name: (vals[nameIdx] || '').trim(), featured: (vals[featuredIdx] || '').trim() === 'TRUE' };
+  }).filter(function(p){ return p.name; });
+}
+
+function populatePlayerSelect(players) {
+  var sel = document.getElementById('coachPlayerSelect');
+  sel.innerHTML = '<option value="" disabled selected>Select a player…</option>';
+
+  var featured = players.filter(function(p){ return p.featured; });
+  if (featured.length) {
+    var grp = document.createElement('optgroup');
+    grp.label = 'Featured';
+    featured.forEach(function(p){ var o = document.createElement('option'); o.value = p.name; o.textContent = p.name; grp.appendChild(o); });
+    sel.appendChild(grp);
+  }
+  var rest = players.filter(function(p){ return !p.featured; });
+  if (rest.length) {
+    var grp2 = document.createElement('optgroup');
+    grp2.label = 'All Players';
+    rest.forEach(function(p){ var o = document.createElement('option'); o.value = p.name; o.textContent = p.name; grp2.appendChild(o); });
+    sel.appendChild(grp2);
+  }
+}
+
+function openCoachRecruitModal() {
+  document.getElementById('coachRecruitForm').style.display = '';
+  document.getElementById('coachSuccess').style.display = 'none';
+  document.getElementById('coachRecruitForm').reset();
+  document.getElementById('coachRecruitOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+
+  // Load players if not already loaded
+  var sel = document.getElementById('coachPlayerSelect');
+  if (sel.options.length <= 1) {
+    sel.innerHTML = '<option value="" disabled selected>Loading players…</option>';
+    fetch(SHEET_CSV_URL)
+      .then(function(r){ return r.text(); })
+      .then(function(csv){ populatePlayerSelect(parseCSVNames(csv)); })
+      .catch(function(){ sel.innerHTML = '<option value="" disabled selected>Could not load players</option>'; });
+  }
+}
+
+function closeCoachModal(e) {
+  if (e && e.target !== document.getElementById('coachRecruitOverlay') && !e.target.classList.contains('recruit-modal-close')) return;
+  document.getElementById('coachRecruitOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function submitCoachForm(e) {
+  e.preventDefault();
+  var data = new FormData(e.target);
+  var obj = {};
+  data.forEach(function(v, k){ if (obj[k]) { obj[k] = [].concat(obj[k], v); } else { obj[k] = v; } });
+  console.log('Coach recruit inquiry:', obj);
+  document.getElementById('coachRecruitForm').style.display = 'none';
+  document.getElementById('coachSuccess').style.display = '';
+}
+</script>
 </body>
 </html>
