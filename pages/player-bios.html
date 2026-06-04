@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Player Bios | MCW Starz</title>
+  <meta name="description" content="Meet the MCW Starz players. View player profiles, stats, GPA, and highlight videos.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+<!-- TOP BANNER -->
+<div class="top-banner">
+  <a href="/pages/contact.html">Register to our upcoming events &rarr;</a>
+</div>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo"><img src="https://mcwstarz.com/wp-content/uploads/new-color-logo.webp" alt="MCW Starz" style="height:48px;"></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/">Home</a></li>
+      <li><a href="/pages/about.html">About Us</a></li>
+      <li><a href="/pages/recruiting.html">Recruiting</a></li>
+      <li><a href="/pages/training.html">Training Programs</a></li>
+      <li><a href="/pages/wellness.html">Health &amp; Wellness</a></li>
+      <li><a href="/pages/player-bios.html" class="active">Player Bios</a></li>
+      <li><a href="/pages/faq.html">FAQ</a></li>
+      <li><a href="/pages/contact.html">Contact Us</a></li>
+      <li><a href="/pages/donate.html" class="nav-donate">Donate</a></li>
+    </ul>
+    <div class="nav-right">
+      <div class="nav-auth">
+        <a href="#">Login</a>
+        <div class="nav-signup-dropdown">
+          <button class="nav-signup-btn">Sign Up &#9662;</button>
+          <div class="signup-dropdown">
+            <a href="/pages/signup-athlete.html">Athlete / Parent</a>
+            <a href="/pages/signup-coach.html">Coach / Staff</a>
+            <a href="/pages/signup-volunteer.html">Volunteer</a>
+          </div>
+        </div>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- PLAYER BIOS LAYOUT -->
+<section class="player-bios-section">
+  <div class="player-layout">
+
+    <!-- LEFT SIDEBAR: PLAYER LIST -->
+    <div class="player-sidebar" id="playerSidebar"></div>
+
+    <!-- RIGHT: PLAYER PROFILE -->
+    <div class="player-profile-area" id="playerProfile"></div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="/" class="nav-logo"><img src="https://mcwstarz.com/wp-content/uploads/new-color-logo.webp" alt="MCW Starz" style="height:48px;"></a>
+      <p>An elite AAU girls basketball program dedicated to developing young athletes on and off the court.</p>
+    </div>
+    <div>
+      <h4>Program</h4>
+      <ul>
+        <li><a href="/pages/about.html">About Us</a></li>
+        <li><a href="/pages/recruiting.html">Recruiting</a></li>
+        <li><a href="/pages/training.html">Training</a></li>
+        <li><a href="/pages/wellness.html">Health &amp; Wellness</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Get Involved</h4>
+      <ul>
+        <li><a href="/pages/contact.html">Contact</a></li>
+        <li><a href="/pages/donate.html">Donate</a></li>
+        <li><a href="/pages/signup-athlete.html">Sign Up</a></li>
+        <li><a href="#">Login</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Resources</h4>
+      <ul>
+        <li><a href="/pages/faq.html">FAQ's</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms of Service</a></li>
+        <li><a href="#">Disclaimer</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 MCW Starz. All rights reserved.</span>
+    <div class="footer-legal">
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+      <a href="#">EULA</a>
+    </div>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+<script>
+// ── GOOGLE SHEET SOURCE ──────────────────────────────────────────────────────
+// 1. Open your Google Sheet → File → Share → Publish to web
+// 2. Choose the player sheet tab → CSV format → Publish
+// 3. Paste the URL below
+var SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRK8fRKjqQa6jJ89tbzDVic2GRThclIzI5EjQWIxakdsemgy0Ls-STGBOE60fBwMac2JtEeorCfUXO5/pub?gid=0&single=true&output=csv';
+
+// ── SHEET COLUMN ORDER (must match your sheet's header row exactly) ──────────
+// featured | grade | name | number | position | height | age | gpa |
+// school | classYear | pgYear | currentSchool | hometown | photo | video | video2 |
+// achievements
+// Note: achievements should be pipe-separated in the cell, e.g.:
+//   Award One|Award Two|Award Three
+
+// ── YOUTUBE HELPER ───────────────────────────────────────────────────────────
+// Accepts full URLs, short URLs, or bare IDs — always returns just the 11-char ID
+function extractVideoId(val) {
+  if (!val) return null;
+  val = val.trim();
+  var m;
+  // https://www.youtube.com/watch?v=ID  or  &v=ID
+  m = val.match(/[?&]v=([a-zA-Z0-9_-]{11})/);
+  if (m) return m[1];
+  // https://youtu.be/ID
+  m = val.match(/youtu\.be\/([a-zA-Z0-9_-]{11})/);
+  if (m) return m[1];
+  // https://www.youtube.com/embed/ID
+  m = val.match(/embed\/([a-zA-Z0-9_-]{11})/);
+  if (m) return m[1];
+  // bare 11-char ID
+  if (/^[a-zA-Z0-9_-]{11}$/.test(val)) return val;
+  return null;
+}
+
+// ── CSV PARSER ───────────────────────────────────────────────────────────────
+function parseCSVRow(row) {
+  var result = [], inQuotes = false, current = '';
+  for (var i = 0; i < row.length; i++) {
+    var ch = row[i];
+    if (ch === '"') {
+      if (inQuotes && row[i + 1] === '"') { current += '"'; i++; }
+      else inQuotes = !inQuotes;
+    } else if (ch === ',' && !inQuotes) {
+      result.push(current); current = '';
+    } else { current += ch; }
+  }
+  result.push(current);
+  return result;
+}
+
+function parseCSV(text) {
+  // Split into rows respecting quoted newlines
+  var rows = [], inQuotes = false, current = '';
+  for (var i = 0; i < text.length; i++) {
+    var ch = text[i];
+    if (ch === '"') { inQuotes = !inQuotes; current += ch; }
+    else if ((ch === '\n' || ch === '\r') && !inQuotes) {
+      if (ch === '\r' && text[i + 1] === '\n') i++;
+      rows.push(current); current = '';
+    } else { current += ch; }
+  }
+  if (current) rows.push(current);
+
+  if (rows.length < 2) return [];
+  var headers = parseCSVRow(rows[0]).map(function(h){ return h.trim(); });
+
+  return rows.slice(1).filter(function(r){ return r.trim(); }).map(function(row) {
+    var vals = parseCSVRow(row);
+    var p = {};
+    headers.forEach(function(h, i){ p[h] = (vals[i] || '').trim(); });
+
+    var hometown = p.hometown;
+    return {
+      featured:      p.featured === 'TRUE',
+      grade:         parseInt(p.grade) || 11,
+      name:          p.name,
+      number:        p.number || null,
+      position:      p.position || null,
+      height:        p.height || null,
+      age:           p.age || null,
+      gpa:           p.gpa || null,
+      school:        p.school || null,
+      classYear:     p.classYear || null,
+      pgYear:        p.pgYear || null,
+      currentSchool: p.currentSchool || null,
+      // Empty cell → null (hide field). Any value including '-' → show it.
+      hometown:      hometown !== '' ? hometown : null,
+      photo:         p.photo || null,
+      video:         extractVideoId(p.video),
+      video2:        extractVideoId(p.video2),
+      achievements:  p.achievements
+                       ? p.achievements.split('|').map(function(a){ return a.trim(); }).filter(Boolean)
+                       : []
+    };
+  });
+}
+
+// ── LOAD & RENDER ─────────────────────────────────────────────────────────────
+function loadPlayers() {
+  document.getElementById('playerSidebar').innerHTML  = '<p class="player-loading">Loading players…</p>';
+  document.getElementById('playerProfile').innerHTML  = '<p class="player-loading-profile">Loading…</p>';
+
+  fetch(SHEET_CSV_URL)
+    .then(function(res) {
+      if (!res.ok) throw new Error('Network error');
+      return res.text();
+    })
+    .then(function(csv) {
+      var players = parseCSV(csv).filter(function(p){ return p.name; });
+      if (!players.length) throw new Error('No players found');
+      renderSidebar(players);
+    })
+    .catch(function(err) {
+      document.getElementById('playerSidebar').innerHTML = '<p class="player-error">Could not load player data.<br>Check the sheet URL and sharing settings.</p>';
+      document.getElementById('playerProfile').innerHTML = '';
+      console.error('Player bios load error:', err);
+    });
+}
+
+// ── LEGACY PLAYER DATA (used until Google Sheet is connected) ─────────────────
+// Once SHEET_CSV_URL is filled in above, this array is ignored.
+var players = [
+  // ── Featured ───────────────────────────────────────────────────────────
+  { featured:true, grade:11, name:'Lily Norton', number:'#1', position:'Point Guard / Shooting Guard', height:"5'8\"", age:17, gpa:'4.51', school:'Tilton School', classYear:'2028', hometown:'Marblehead, MA', ppg:null, rpg:null, apg:null, spg:null, photo:null, video:'eh3zr1g_q6E', video2:'E9ocNnfGdMQ',
+    achievements:[
+      "2025 Massachusetts State Champions - St. Mary's Lynn, Team MVP Award",
+      "2025 CAC All-Star, 2025 Lynn All-City Team, 2024 and 2025 Spartan Classic All Tournament Team",
+      "2025 St. Mary's Soccer - Defensive Player of the Year",
+      "2026 National Prep School Champions - Tilton School"
+    ]
+  },
+  { featured:true, grade:12, name:'Celia Neilson', number:'#10', position:'Wing', height:"6'0\"", age:18, gpa:'4.2', pgYear:'Tilton School', hometown:'', ppg:null, rpg:null, apg:null, spg:null, photo:null, video:'X5kPyypaEMg', video2:'Nf5a5dkyVUE',
+    achievements:[
+      'Boston Globe Athlete of the Year',
+      'Boston Globe Super Team',
+      'Salem News & Lynn Item Player of the Year',
+      'CCL Offensive Player of the Year',
+      'CCL All Star',
+      'Boston Herald All Star',
+      '2026 MA State Title Champions',
+      '2x Tournament MVP',
+      'High School Career: 1,224 Points'
+    ]
+  },
+  // ── 9th Grade ──────────────────────────────────────────────────────────
+  { grade:9, name:'Kennedy Mitchell',  position:'Point Guard',     height:"5'5\"",  gpa:'3.6', hometown:'Cleveland, OH',    ppg:'10.5', rpg:'2.8', apg:'4.2', spg:'1.5', photo:null, video:null },
+  { grade:9, name:'Amara Thompson',   position:'Shooting Guard',  height:"5'6\"",  gpa:'3.8', hometown:'Chicago, IL',      ppg:'9.2',  rpg:'3.1', apg:'2.8', spg:'1.2', photo:null, video:null },
+  { grade:9, name:'Zoe Henderson',    position:'Small Forward',   height:"5'8\"",  gpa:'3.5', hometown:'Detroit, MI',      ppg:'8.7',  rpg:'5.2', apg:'1.4', spg:'0.9', photo:null, video:null },
+  { grade:9, name:'Brianna Torres',   position:'Center',          height:"5'11\"", gpa:'3.4', hometown:'Indianapolis, IN', ppg:'7.3',  rpg:'7.8', apg:'0.8', spg:'0.6', photo:null, video:null },
+  { grade:9, name:'Jade Patterson',   position:'Point Guard',     height:"5'4\"",  gpa:'3.9', hometown:'Columbus, OH',     ppg:'11.1', rpg:'2.5', apg:'5.1', spg:'1.8', photo:null, video:null },
+  { grade:9, name:'Nyla Brooks',      position:'Power Forward',   height:"5'10\"", gpa:'3.7', hometown:'Milwaukee, WI',    ppg:'8.4',  rpg:'6.3', apg:'1.1', spg:'0.7', photo:null, video:null },
+  { grade:9, name:'Camille Richardson',position:'Shooting Guard', height:"5'7\"",  gpa:'3.6', hometown:'Kansas City, MO', ppg:'9.8',  rpg:'2.9', apg:'3.2', spg:'1.4', photo:null, video:null },
+  { grade:9, name:'Destiny Foster',   position:'Small Forward',   height:"5'9\"",  gpa:'3.3', hometown:'Memphis, TN',      ppg:'7.6',  rpg:'4.8', apg:'1.7', spg:'1.0', photo:null, video:null },
+  { grade:9, name:'Morgan Lee',       position:'Point Guard',     height:"5'5\"",  gpa:'4.0', hometown:'St. Louis, MO',   ppg:'10.2', rpg:'3.0', apg:'4.8', spg:'1.6', photo:null, video:null },
+  { grade:9, name:'Alexis Rivera',    position:'Center',          height:"6'0\"",  gpa:'3.5', hometown:'Cincinnati, OH',  ppg:'6.9',  rpg:'8.4', apg:'0.7', spg:'0.5', photo:null, video:null },
+  { grade:9, name:'Taylor Hayes',     position:'Shooting Guard',  height:"5'6\"",  gpa:'3.8', hometown:'Louisville, KY',  ppg:'9.5',  rpg:'2.7', apg:'2.6', spg:'1.3', photo:null, video:null },
+  { grade:9, name:'Imani Jackson',    position:'Small Forward',   height:"5'8\"",  gpa:'3.7', hometown:'Nashville, TN',   ppg:'8.1',  rpg:'4.5', apg:'2.0', spg:'1.1', photo:null, video:null },
+  { grade:9, name:'Savannah Collins', position:'Power Forward',   height:"5'10\"", gpa:'3.4', hometown:'Atlanta, GA',     ppg:'7.8',  rpg:'5.9', apg:'1.3', spg:'0.8', photo:null, video:null },
+  { grade:9, name:'Priya Patel',      position:'Point Guard',     height:"5'4\"",  gpa:'4.0', hometown:'Charlotte, NC',   ppg:'10.8', rpg:'2.4', apg:'5.3', spg:'1.9', photo:null, video:null },
+  { grade:9, name:'Elana Cruz',       position:'Shooting Guard',  height:"5'7\"",  gpa:'3.6', hometown:'Raleigh, NC',     ppg:'9.3',  rpg:'3.2', apg:'2.9', spg:'1.2', photo:null, video:null },
+  // ── 10th Grade ─────────────────────────────────────────────────────────
+  { grade:10, name:'Morgan Davis',    position:'Center',          height:"6'2\"",  gpa:'3.5', hometown:'Detroit, MI',      ppg:'12.3', rpg:'10.1', apg:'1.8', spg:'2.2', photo:null, video:null },
+  { grade:10, name:'Aisha Williams',  position:'Point Guard',     height:"5'6\"",  gpa:'3.9', hometown:'Chicago, IL',      ppg:'14.1', rpg:'3.8',  apg:'6.0', spg:'1.7', photo:null, video:null },
+  { grade:10, name:'Brooklyn Carter', position:'Small Forward',   height:"5'9\"",  gpa:'3.6', hometown:'Houston, TX',      ppg:'11.5', rpg:'5.7',  apg:'2.3', spg:'1.2', photo:null, video:null },
+  { grade:10, name:'Simone Wright',   position:'Shooting Guard',  height:"5'8\"",  gpa:'3.7', hometown:'Phoenix, AZ',      ppg:'13.2', rpg:'3.5',  apg:'3.1', spg:'1.5', photo:null, video:null },
+  { grade:10, name:'Kayla Murphy',    position:'Power Forward',   height:"6'0\"",  gpa:'3.4', hometown:'Dallas, TX',       ppg:'10.8', rpg:'7.9',  apg:'1.5', spg:'0.9', photo:null, video:null },
+  { grade:10, name:'Destiny Harris',  position:'Point Guard',     height:"5'5\"",  gpa:'3.8', hometown:'San Antonio, TX',  ppg:'13.7', rpg:'3.2',  apg:'5.8', spg:'2.0', photo:null, video:null },
+  { grade:10, name:'Jada Nelson',     position:'Center',          height:"6'1\"",  gpa:'3.3', hometown:'Columbus, OH',     ppg:'9.6',  rpg:'9.3',  apg:'1.2', spg:'1.4', photo:null, video:null },
+  { grade:10, name:'Tiana Scott',     position:'Small Forward',   height:"5'10\"", gpa:'3.7', hometown:'Jacksonville, FL', ppg:'11.9', rpg:'6.1',  apg:'2.7', spg:'1.1', photo:null, video:null },
+  { grade:10, name:'Lyric Johnson',   position:'Shooting Guard',  height:"5'7\"",  gpa:'3.9', hometown:'Austin, TX',       ppg:'14.4', rpg:'3.0',  apg:'3.6', spg:'1.8', photo:null, video:null },
+  { grade:10, name:'Aniyah Martin',   position:'Power Forward',   height:"5'11\"", gpa:'3.5', hometown:'Fort Worth, TX',   ppg:'10.2', rpg:'7.5',  apg:'1.9', spg:'0.8', photo:null, video:null },
+  { grade:10, name:'Chelsea Robinson',position:'Point Guard',     height:"5'6\"",  gpa:'3.8', hometown:'Memphis, TN',      ppg:'13.0', rpg:'3.4',  apg:'5.5', spg:'1.6', photo:null, video:null },
+  { grade:10, name:'Naomi Walker',    position:'Center',          height:"6'0\"",  gpa:'3.4', hometown:'Denver, CO',       ppg:'9.1',  rpg:'8.7',  apg:'1.0', spg:'1.2', photo:null, video:null },
+  { grade:10, name:'Olivia Thomas',   position:'Shooting Guard',  height:"5'8\"",  gpa:'3.9', hometown:'Portland, OR',     ppg:'12.8', rpg:'3.1',  apg:'2.9', spg:'1.4', photo:null, video:null },
+  { grade:10, name:'Gabrielle Moore', position:'Small Forward',   height:"5'10\"", gpa:'3.6', hometown:'Las Vegas, NV',    ppg:'11.4', rpg:'5.9',  apg:'2.1', spg:'1.0', photo:null, video:null },
+  { grade:10, name:'Kezia Brown',     position:'Power Forward',   height:"6'1\"",  gpa:'3.5', hometown:'Oklahoma City, OK',ppg:'10.5', rpg:'8.1',  apg:'1.6', spg:'0.7', photo:null, video:null },
+  { grade:10, name:'Raven Clark',     position:'Point Guard',     height:"5'5\"",  gpa:'3.7', hometown:'Tucson, AZ',       ppg:'12.6', rpg:'2.9',  apg:'5.2', spg:'1.7', photo:null, video:null },
+  { grade:10, name:'Danielle Lewis',  position:'Shooting Guard',  height:"5'7\"",  gpa:'3.6', hometown:'Fresno, CA',       ppg:'11.7', rpg:'3.3',  apg:'3.0', spg:'1.3', photo:null, video:null },
+  { grade:10, name:'Maya Rodriguez',  position:'Center',          height:"6'2\"",  gpa:'3.8', hometown:'Sacramento, CA',   ppg:'8.9',  rpg:'9.6',  apg:'0.9', spg:'1.5', photo:null, video:null },
+  { grade:10, name:'Ciara Washington',position:'Small Forward',   height:"5'9\"",  gpa:'3.5', hometown:'Long Beach, CA',   ppg:'12.1', rpg:'5.4',  apg:'2.5', spg:'1.1', photo:null, video:null },
+  { grade:10, name:'Faith Adams',     position:'Power Forward',   height:"5'11\"", gpa:'3.7', hometown:'Bakersfield, CA',  ppg:'10.7', rpg:'7.2',  apg:'1.7', spg:'0.9', photo:null, video:null },
+  // ── 11th Grade ─────────────────────────────────────────────────────────
+  { grade:11, name:'Aaliyah Johnson', position:'Point Guard',     height:"5'7\"",  gpa:'3.9', hometown:'Chicago, IL',      ppg:'18.2', rpg:'4.1', apg:'6.3', spg:'1.8', photo:null, video:null },
+  { grade:11, name:'Taylor Brown',    position:'Shooting Guard',  height:"5'9\"",  gpa:'4.0', hometown:'Indianapolis, IN', ppg:'16.8', rpg:'3.2', apg:'7.5', spg:'2.1', photo:null, video:null },
+  { grade:11, name:'Jasmine Howard',  position:'Small Forward',   height:"6'0\"",  gpa:'3.7', hometown:'Louisville, KY',   ppg:'14.5', rpg:'6.8', apg:'2.9', spg:'1.3', photo:null, video:null },
+  { grade:11, name:'Kiera Evans',     position:'Center',          height:"6'2\"",  gpa:'3.5', hometown:'Nashville, TN',   ppg:'12.1', rpg:'9.7', apg:'1.4', spg:'1.9', photo:null, video:null },
+  { grade:11, name:'Dominique Mitchell',position:'Power Forward', height:"6'1\"",  gpa:'3.6', hometown:'Milwaukee, WI',   ppg:'13.8', rpg:'7.3', apg:'2.1', spg:'1.0', photo:null, video:null },
+  { grade:11, name:'Alexia Davis',    position:'Point Guard',     height:"5'6\"",  gpa:'3.8', hometown:'Cleveland, OH',   ppg:'17.3', rpg:'3.5', apg:'6.8', spg:'2.0', photo:null, video:null },
+  { grade:11, name:'Chanell Williams',position:'Shooting Guard',  height:"5'8\"",  gpa:'3.7', hometown:'Detroit, MI',      ppg:'15.6', rpg:'3.8', apg:'3.4', spg:'1.6', photo:null, video:null },
+  { grade:11, name:'Brianna Jones',   position:'Small Forward',   height:"5'10\"", gpa:'3.6', hometown:'Columbus, OH',    ppg:'13.2', rpg:'6.5', apg:'2.6', spg:'1.1', photo:null, video:null },
+  { grade:11, name:'Miracle Turner',  position:'Center',          height:"6'3\"",  gpa:'3.4', hometown:'Memphis, TN',     ppg:'11.8', rpg:'10.2',apg:'1.1', spg:'2.1', photo:null, video:null },
+  { grade:11, name:'Sydney Baker',    position:'Point Guard',     height:"5'5\"",  gpa:'4.0', hometown:'St. Louis, MO',   ppg:'16.4', rpg:'3.1', apg:'7.2', spg:'2.3', photo:null, video:null },
+  { grade:11, name:'Tierra Green',    position:'Power Forward',   height:"6'0\"",  gpa:'3.5', hometown:'Kansas City, MO', ppg:'12.7', rpg:'7.8', apg:'1.9', spg:'0.8', photo:null, video:null },
+  { grade:11, name:'Jasmin Cooper',   position:'Shooting Guard',  height:"5'8\"",  gpa:'3.8', hometown:'Atlanta, GA',     ppg:'15.1', rpg:'3.6', apg:'3.7', spg:'1.5', photo:null, video:null },
+  { grade:11, name:'Renee Campbell',  position:'Small Forward',   height:"5'11\"", gpa:'3.6', hometown:'Charlotte, NC',   ppg:'13.5', rpg:'5.9', apg:'2.4', spg:'1.2', photo:null, video:null },
+  { grade:11, name:'Lauren Hill',     position:'Point Guard',     height:"5'7\"",  gpa:'3.9', hometown:'Raleigh, NC',     ppg:'17.0', rpg:'3.8', apg:'6.5', spg:'1.9', photo:null, video:null },
+  { grade:11, name:'Monique Phillips',position:'Center',          height:"6'1\"",  gpa:'3.5', hometown:'Richmond, VA',    ppg:'11.5', rpg:'9.4', apg:'1.3', spg:'1.7', photo:null, video:null },
+  { grade:11, name:'Destiny Allen',   position:'Power Forward',   height:"6'0\"",  gpa:'3.7', hometown:'Virginia Beach, VA',ppg:'13.0',rpg:'7.1', apg:'2.0', spg:'0.9', photo:null, video:null },
+  { grade:11, name:'Tiffany Wright',  position:'Shooting Guard',  height:"5'7\"",  gpa:'3.6', hometown:'Columbia, SC',    ppg:'14.8', rpg:'3.3', apg:'3.2', spg:'1.4', photo:null, video:null },
+  { grade:11, name:'Kiara Young',     position:'Small Forward',   height:"5'10\"", gpa:'3.8', hometown:'Savannah, GA',    ppg:'12.9', rpg:'6.2', apg:'2.7', spg:'1.1', photo:null, video:null },
+  { grade:11, name:'Ebony Hall',      position:'Center',          height:"6'2\"",  gpa:'3.4', hometown:'Tallahassee, FL', ppg:'11.2', rpg:'9.9', apg:'0.9', spg:'1.8', photo:null, video:null },
+  { grade:11, name:'Shayla King',     position:'Point Guard',     height:"5'6\"",  gpa:'3.9', hometown:'Gainesville, FL', ppg:'16.9', rpg:'3.0', apg:'7.0', spg:'2.2', photo:null, video:null },
+  { grade:11, name:'Niani Scott',     position:'Power Forward',   height:"5'11\"", gpa:'3.7', hometown:'Tampa, FL',       ppg:'12.4', rpg:'7.6', apg:'1.8', spg:'0.7', photo:null, video:null },
+  { grade:11, name:'Deja Ward',       position:'Shooting Guard',  height:"5'8\"",  gpa:'3.6', hometown:'Orlando, FL',     ppg:'15.3', rpg:'3.7', apg:'3.5', spg:'1.6', photo:null, video:null },
+  { grade:11, name:'Whitney Price',   position:'Small Forward',   height:"5'9\"",  gpa:'3.5', hometown:'Miami, FL',       ppg:'13.6', rpg:'5.8', apg:'2.5', spg:'1.0', photo:null, video:null },
+  { grade:11, name:'Kaila Simmons',   position:'Center',          height:"6'0\"",  gpa:'3.7', hometown:'Jacksonville, FL',ppg:'10.9', rpg:'9.1', apg:'1.2', spg:'1.5', photo:null, video:null },
+  { grade:11, name:'Ariana Powell',   position:'Point Guard',     height:"5'5\"",  gpa:'4.0', hometown:'New Orleans, LA', ppg:'17.5', rpg:'2.9', apg:'7.3', spg:'2.4', photo:null, video:null },
+  // ── 12th Grade ─────────────────────────────────────────────────────────
+  { grade:12, name:'Jasmine Williams',position:'Small Forward',   height:"6'0\"",  gpa:'3.7', hometown:'Milwaukee, WI',   ppg:'14.5', rpg:'8.2', apg:'2.1', spg:'1.4', photo:null, video:null },
+  { grade:12, name:'Destiny Clarke',  position:'Power Forward',   height:"6'1\"",  gpa:'3.8', hometown:'Columbus, OH',    ppg:'15.2', rpg:'7.4', apg:'3.1', spg:'1.6', photo:null, video:null },
+  { grade:12, name:'Caroline Ellis',  position:'Shooting Guard',  height:"5'9\"",  gpa:'3.9', hometown:'Houston, TX',     ppg:'16.5', rpg:'3.6', apg:'4.2', spg:'1.8', photo:null, video:null },
+  { grade:12, name:'Marnelle Garfield',position:'Center',         height:"6'3\"",  gpa:'3.6', hometown:'Detroit, MI',     ppg:'13.1', rpg:'10.5',apg:'1.6', spg:'2.0', photo:null, video:null },
+  { grade:12, name:'Yirsy Quinn',     position:'Point Guard',     height:"5'7\"",  gpa:'3.8', hometown:'Chicago, IL',     ppg:'17.8', rpg:'4.0', apg:'6.9', spg:'2.2', photo:null, video:null },
+  { grade:12, name:'Tamia Peterson',  position:'Small Forward',   height:"5'11\"", gpa:'3.7', hometown:'Atlanta, GA',     ppg:'14.0', rpg:'6.7', apg:'2.8', spg:'1.3', photo:null, video:null },
+  { grade:12, name:'Monique Stewart', position:'Shooting Guard',  height:"5'8\"",  gpa:'3.5', hometown:'Dallas, TX',      ppg:'15.7', rpg:'3.3', apg:'3.8', spg:'1.7', photo:null, video:null },
+  { grade:12, name:'Ashlee Harris',   position:'Center',          height:"6'1\"",  gpa:'3.6', hometown:'Memphis, TN',     ppg:'12.4', rpg:'9.8', apg:'1.3', spg:'1.9', photo:null, video:null },
+  { grade:12, name:'Keyara Thompson', position:'Power Forward',   height:"6'0\"",  gpa:'3.7', hometown:'Nashville, TN',   ppg:'13.6', rpg:'8.0', apg:'2.0', spg:'1.0', photo:null, video:null },
+  { grade:12, name:'Sierra Daniels',  position:'Point Guard',     height:"5'6\"",  gpa:'3.9', hometown:'Cleveland, OH',   ppg:'17.2', rpg:'3.5', apg:'7.0', spg:'2.1', photo:null, video:null },
+  { grade:12, name:'Alicia Barnes',   position:'Shooting Guard',  height:"5'7\"",  gpa:'3.6', hometown:'Indianapolis, IN',ppg:'14.8', rpg:'3.1', apg:'3.5', spg:'1.5', photo:null, video:null },
+  { grade:12, name:'Shaquira Grant',  position:'Small Forward',   height:"5'10\"", gpa:'3.8', hometown:'Louisville, KY',  ppg:'13.3', rpg:'6.4', apg:'2.6', spg:'1.2', photo:null, video:null },
+  { grade:12, name:'Tamera Hughes',   position:'Center',          height:"6'2\"",  gpa:'3.5', hometown:'St. Louis, MO',  ppg:'11.9', rpg:'10.1',apg:'1.1', spg:'1.8', photo:null, video:null },
+  { grade:12, name:'Brianna Long',    position:'Power Forward',   height:"5'11\"", gpa:'3.7', hometown:'Kansas City, MO', ppg:'12.8', rpg:'7.7', apg:'1.9', spg:'0.8', photo:null, video:null },
+  { grade:12, name:'Candace Freeman', position:'Point Guard',     height:"5'5\"",  gpa:'4.0', hometown:'Charlotte, NC',   ppg:'16.9', rpg:'2.8', apg:'7.4', spg:'2.3', photo:null, video:null },
+  { grade:12, name:'Nekia Sanders',   position:'Shooting Guard',  height:"5'8\"",  gpa:'3.6', hometown:'Raleigh, NC',     ppg:'14.5', rpg:'3.4', apg:'3.3', spg:'1.4', photo:null, video:null },
+  { grade:12, name:'Raelynn Foster',  position:'Small Forward',   height:"5'9\"",  gpa:'3.7', hometown:'Richmond, VA',    ppg:'13.1', rpg:'5.7', apg:'2.4', spg:'1.1', photo:null, video:null },
+  { grade:12, name:'Jordyn Reid',     position:'Center',          height:"6'0\"",  gpa:'3.8', hometown:'Birmingham, AL',  ppg:'11.5', rpg:'9.3', apg:'1.0', spg:'1.7', photo:null, video:null },
+  { grade:12, name:'Camryn Bell',     position:'Power Forward',   height:"6'1\"",  gpa:'3.6', hometown:'Jackson, MS',     ppg:'13.9', rpg:'8.3', apg:'1.7', spg:'0.9', photo:null, video:null },
+  { grade:12, name:'Trevina Monroe',  position:'Point Guard',     height:"5'7\"",  gpa:'3.9', hometown:'New Orleans, LA', ppg:'18.0', rpg:'3.7', apg:'7.1', spg:'2.2', photo:null, video:null }
+];
+
+// ── RENDER FUNCTIONS ─────────────────────────────────────────────────────────
+function getInitials(name) {
+  return name.split(' ').map(function(n){ return n[0]; }).join('');
+}
+
+function renderSidebar(players) {
+  var sidebar = document.getElementById('playerSidebar');
+  var html = '';
+
+  var featured = players.filter(function(p){ return p.featured; });
+  if (featured.length) {
+    html += '<div class="player-sidebar-grade-label">Featured</div>';
+    featured.forEach(function(p) {
+      var idx = players.indexOf(p);
+      html += '<button type="button" class="player-sidebar-btn" data-idx="' + idx + '">' + p.name + (p.number ? ' <span class="sidebar-number">' + p.number + '</span>' : '') + '</button>';
+    });
+  }
+
+  [9,10,11,12].forEach(function(g) {
+    var graded = players.filter(function(p){ return !p.featured && p.grade === g; });
+    if (!graded.length) return;
+    html += '<div class="player-sidebar-grade-label">' + ordinal(g) + ' Grade</div>';
+    graded.forEach(function(p) {
+      var idx = players.indexOf(p);
+      html += '<button type="button" class="player-sidebar-btn" data-idx="' + idx + '">' + p.name + '</button>';
+    });
+  });
+
+  sidebar.innerHTML = html;
+  sidebar.querySelectorAll('.player-sidebar-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      sidebar.querySelectorAll('.player-sidebar-btn').forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      renderProfile(players[parseInt(btn.dataset.idx)]);
+    });
+  });
+  var first = sidebar.querySelector('.player-sidebar-btn');
+  if (first) { first.classList.add('active'); renderProfile(players[0]); }
+}
+
+function renderProfile(p) {
+  var photoHtml = p.photo
+    ? '<img src="' + p.photo + '" alt="' + p.name + '">'
+    : '<span class="player-profile-initials">' + getInitials(p.name) + '</span>';
+
+  var videoHtml = p.video
+    ? '<div class="player-profile-video"><iframe src="https://www.youtube.com/embed/' + p.video + '" title="' + p.name + ' Highlights" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>'
+    : '<div class="player-profile-video-placeholder"><svg width="48" height="48" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="24" fill="#0636BC" opacity="0.15"/><polygon points="19,15 36,24 19,33" fill="#0636BC"/></svg><span>Highlight Video Coming Soon</span></div>';
+  if (p.video2) {
+    videoHtml += '<div class="player-profile-video player-profile-video-second"><iframe src="https://www.youtube.com/embed/' + p.video2 + '" title="' + p.name + ' Video 2" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>';
+  }
+
+  // Build meta items dynamically based on available data
+  var metaHtml = '';
+  if (p.age)           metaHtml += metaItem('Age', p.age);
+  if (p.height)        metaHtml += metaItem('Height', p.height);
+  if (p.currentSchool) metaHtml += metaItem('Current', p.currentSchool);
+  if (p.pgYear)        metaHtml += metaItem('PG Year', p.pgYear);
+  if (p.school)        metaHtml += metaItem('School', p.school);
+  if (p.classYear)     metaHtml += metaItem('Class Of', p.classYear);
+  if (!p.school && !p.currentSchool) metaHtml += metaItem('Grade', ordinal(p.grade));
+  if (p.hometown != null) metaHtml += metaItem('Hometown', p.hometown);
+  if (p.gpa)           metaHtml += metaItem('GPA', p.gpa);
+
+  var achieveHtml = '';
+  if (p.achievements && p.achievements.length) {
+    achieveHtml = '<div class="player-achievements">'
+      + '<span class="player-achievements-title">Achievements &amp; Awards</span>'
+      + '<div class="player-achievements-list">'
+      + p.achievements.map(function(a){ return '<div class="player-achievement-item">' + a + '</div>'; }).join('')
+      + '</div></div>';
+  }
+
+  var nameDisplay = p.name + (p.number ? ' <span style="color:var(--red);font-size:0.7em;font-weight:700;">' + p.number + '</span>' : '');
+
+  var html = '<div class="player-profile-header">'
+    + '<div class="player-profile-photo">' + photoHtml + '</div>'
+    + '<div class="player-profile-info">'
+    + '<div class="player-profile-name">' + nameDisplay + '</div>'
+    + '<div class="player-profile-pos">' + p.position + '</div>'
+    + '<div class="player-profile-meta">' + metaHtml + '</div>'
+    + achieveHtml
+    + '</div>'
+    + '</div>'
+    + videoHtml;
+
+  document.getElementById('playerProfile').innerHTML = html;
+}
+
+function metaItem(label, val) {
+  return '<div class="player-profile-meta-item">'
+    + '<span class="player-profile-meta-label">' + label + '</span>'
+    + '<span class="player-profile-meta-value">' + (val || '—') + '</span>'
+    + '</div>';
+}
+
+function statItem(val, label) {
+  return '<div class="player-profile-stat">'
+    + '<span class="player-profile-stat-val">' + (val || '—') + '</span>'
+    + '<span class="player-profile-stat-lbl">' + label + '</span>'
+    + '</div>';
+}
+
+function ordinal(g) {
+  return g + (g === 1 ? 'st' : g === 2 ? 'nd' : g === 3 ? 'rd' : 'th');
+}
+
+// ── BOOT ─────────────────────────────────────────────────────────────────────
+// If a real sheet URL is set, fetch from Google Sheets.
+// Otherwise fall back to the hardcoded players array above.
+if (SHEET_CSV_URL && SHEET_CSV_URL !== 'PASTE_YOUR_GOOGLE_SHEET_CSV_URL_HERE') {
+  loadPlayers();
+} else {
+  renderSidebar(players);
+}
+</script>
+
+</body>
+</html>
