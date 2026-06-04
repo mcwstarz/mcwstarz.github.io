@@ -49,12 +49,32 @@
 </nav>
 
 <!-- PAGE HERO -->
-<section id="main-content" class="page-hero" style="background: url('https://mcwstarz.com/wp-content/uploads/mcwstarz-image-about-us-22.webp') center/cover no-repeat;">
+<section id="main-content" class="page-hero faq-hero" style="background: url('https://mcwstarz.com/wp-content/uploads/mcwstarz-image-about-us-22.webp') center/cover no-repeat;">
   <div style="position:absolute;inset:0;background:rgba(0,0,0,0.55);"></div>
   <div class="page-hero-content" style="position:relative;z-index:1;">
     <div class="hero-badge">Got Questions?</div>
     <h1>Frequently Asked <span class="accent">Questions</span></h1>
     <p>Everything you need to know about MCW Starz — programs, tryouts, recruiting, and more.</p>
+    <div class="faq-search-wrap">
+      <label for="faqSearch" class="sr-only">Search FAQs</label>
+      <div class="faq-search-box">
+        <svg class="faq-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input
+          type="search"
+          id="faqSearch"
+          class="faq-search-input"
+          placeholder="Search questions…"
+          autocomplete="off"
+          aria-label="Search FAQs"
+          aria-controls="faqContent"
+          aria-live="polite"
+        >
+        <button class="faq-search-clear" id="faqSearchClear" aria-label="Clear search" style="display:none;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <p class="faq-search-hint" id="faqSearchHint" aria-live="polite"></p>
+    </div>
   </div>
 </section>
 
@@ -760,6 +780,110 @@
 </footer>
 
 <script src="../js/main.js"></script>
+<script>
+(function() {
+  var input  = document.getElementById('faqSearch');
+  var clear  = document.getElementById('faqSearchClear');
+  var hint   = document.getElementById('faqSearchHint');
+  var tabs   = document.querySelectorAll('.faq-tab');
+  if (!input) return;
+
+  function normalize(s) { return s.toLowerCase().replace(/\s+/g,' ').trim(); }
+
+  function highlightText(el, term) {
+    el.querySelectorAll('mark.faq-hl').forEach(function(m) {
+      m.outerHTML = m.textContent;
+    });
+    if (!term) return;
+    var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+    var nodes = [];
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+    nodes.forEach(function(node) {
+      var idx = normalize(node.textContent).indexOf(term);
+      if (idx === -1) return;
+      var before = node.textContent.slice(0, idx);
+      var match  = node.textContent.slice(idx, idx + term.length);
+      var after  = node.textContent.slice(idx + term.length);
+      var span = document.createElement('span');
+      span.innerHTML = (before ? document.createTextNode(before).textContent : '')
+        + '<mark class="faq-hl">' + match + '</mark>'
+        + (after ? document.createTextNode(after).textContent : '');
+      node.parentNode.replaceChild(span, node);
+    });
+  }
+
+  function runSearch() {
+    var term = normalize(input.value);
+    clear.style.display = term ? '' : 'none';
+
+    // Reset all tabs to show everything when searching
+    if (term) {
+      tabs.forEach(function(t) { t.classList.remove('active'); });
+      document.querySelector('.faq-tab[data-category="all"]').classList.add('active');
+      document.querySelectorAll('.faq-category').forEach(function(cat) { cat.style.display = ''; });
+    }
+
+    var items = document.querySelectorAll('.faq-item');
+    var visible = 0;
+
+    items.forEach(function(item) {
+      var q = item.querySelector('.faq-question');
+      var a = item.querySelector('.faq-answer');
+      if (!term) {
+        item.style.display = '';
+        item.classList.remove('faq-search-open');
+        highlightText(q, '');
+        highlightText(a, '');
+        return;
+      }
+      var qText = normalize(q.textContent);
+      var aText = normalize(a.textContent);
+      var match = qText.includes(term) || aText.includes(term);
+      item.style.display = match ? '' : 'none';
+      if (match) {
+        item.classList.add('faq-search-open');
+        highlightText(q, term);
+        highlightText(a, term);
+        visible++;
+      } else {
+        item.classList.remove('faq-search-open');
+      }
+    });
+
+    // Hide empty categories
+    if (term) {
+      document.querySelectorAll('.faq-category').forEach(function(cat) {
+        var anyVisible = [...cat.querySelectorAll('.faq-item')].some(function(i) {
+          return i.style.display !== 'none';
+        });
+        cat.style.display = anyVisible ? '' : 'none';
+      });
+      hint.textContent = visible === 0
+        ? 'No results for "' + input.value + '"'
+        : visible + ' result' + (visible === 1 ? '' : 's') + ' found';
+    } else {
+      hint.textContent = '';
+    }
+  }
+
+  input.addEventListener('input', runSearch);
+  clear.addEventListener('click', function() {
+    input.value = '';
+    runSearch();
+    input.focus();
+  });
+
+  // When a tab is clicked, clear the search
+  tabs.forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      if (input.value) {
+        input.value = '';
+        runSearch();
+      }
+    });
+  });
+})();
+</script>
 <script>
   // FAQ category filter tabs
   document.querySelectorAll('.faq-tab').forEach(function(tab) {
